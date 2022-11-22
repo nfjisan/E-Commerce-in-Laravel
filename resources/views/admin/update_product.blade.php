@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    <base href="/public">
  @include('admin.head')
   <body>
     <div class="container-scroller">
@@ -42,34 +43,34 @@
                 <div class="product" style="text-align:center; padding-top:40px;">
                     <h2 style="font-size: 40px; padding-bottom:40px;">Add Product</h2>
 
-                <form action="{{url('/add_product')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{url('/confirm_update_product',$product->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
 
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Product Title:</label>
-                    <input type="text" style="color: black;" name="title" placeholder="write product title" required="">
+                    <input type="text" style="color: black;" name="title" placeholder="write product title" value="{{$product->title}}" required="">
                    </div>
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Product Description:</label>
-                    <input type="text" style="color: black;" name="description" placeholder="write product description" required>
+                    <input type="text" style="color: black;" name="description" placeholder="write product description" value="{{$product->description}}" required>
                    </div>
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Product Price:</label>
-                    <input type="text" style="color: black;" name="price" placeholder="write product price" required>
+                    <input type="text" style="color: black;" name="price" placeholder="write product price" value="{{$product->price}}" required>
                    </div>
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Product Quantity:</label>
-                    <input type="text" style="color: black;" name="quantity" placeholder="write quantity" required>
+                    <input type="text" style="color: black;" name="quantity" placeholder="write quantity" value="{{$product->quantity}}" required>
                    </div>
 
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Discount Price:</label>
-                    <input type="text" style="color: black;" name="discount_price" placeholder="write discount price" required>
+                    <input type="text" style="color: black;" name="discount_price" placeholder="write discount price" value="{{$product->discount_price}}" required>
                    </div>
 
                    <div style="padding-bottom: 15px;">
@@ -77,21 +78,27 @@
 
                     <select  style="color: black; name="catagory" required>
 
-                        <option value="" selected="">Select product catagory</option>
+                        <option value="{{$product->catagory}}"  selected="">{{$product->catagory}}</option>
                         @foreach ($catagory as $catagory)
                         <option value="{{$catagory->catagory_name}}">{{$catagory->catagory_name}}</option>
                         @endforeach
+
 
                     </select>
                    </div>
 
                    <div style="padding-bottom: 15px;">
-                    <label style="display: inline-block; width:200px;">Product Image Here:</label>
+                    <label style="display: inline-block; width:200px;"> current Product Image:</label>
+                    <img style="margin: auto" height="100" width="100" src="/product/{{$product->image}}">
+                   </div>
+
+                   <div style="padding-bottom: 15px;">
+                    <label style="display: inline-block; width:200px;"> Change Product Image:</label>
                     <input type="file" name="image">
                    </div>
 
                    <div style="padding-bottom: 15px;">
-                    <input class="btn btn-primary" type="submit" value="Add Product">
+                    <input class="btn btn-primary" type="submit" value="Update Product">
                    </div>
 
 
