@@ -69,13 +69,13 @@
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Discount Price:</label>
-                    <input type="text" style="color: black;" name="discount_price" placeholder="write discount price" required>
+                    <input type="text" style="color: black;" name="discount_price" placeholder="write discount price">
                    </div>
 
                    <div style="padding-bottom: 15px;">
                     <label style="display: inline-block; width:200px;">Product Catagory:</label>
 
-                    <select  style="color: black; name="catagory" required>
+                    <select  style="color: black;" name="catagory" required>
 
                         <option value="" selected="">Select product catagory</option>
                         @foreach ($catagory as $catagory)

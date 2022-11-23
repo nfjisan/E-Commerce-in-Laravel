@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
    <head>
-    <base href="/public">
       <!-- Basic -->
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -26,67 +25,42 @@
       <div class="hero_area">
          <!-- header section strats -->
         @include('home.header')
-         <!-- end header section -->
 
 
 
+      <div style="margin: auto; width:50%;">
+        <table class="table table-bordered">
+            <tr style="font-size: 30px;color:#fff; background:rgb(97, 132, 146)">
+                <th>Product title</th>
+                <th>Product quantity</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
 
-      <div class="col-sm-6 col-md-4 col-lg-4" style="margin: auto; width:50%; padding:30px;">
+            <?php $totalprice=0; ?>
+            @foreach ($cart as $cart)
 
-           <div class="img-box">
-              <img src="product/{{$product->image}}" alt="image">
-           </div>
-           <div class="detail-box">
-              <h5>
-                 {{$product->title}}
-              </h5>
+            <tr>
+                <td>{{$cart->product_title}}</td>
+                <td>{{$cart->quantity}}</td>
+                <td>{{$cart->price}}&#2547;</td>
+                <td><img style="width: 110px;" src="/product/{{$cart->image}}"></td>
+                <td>
+                    <a href="{{url('remove_cart',$cart->id)}}" onclick="return confirm('Are You Sure To Remove This')" class="btn btn-danger">Remove</a>
+                </td>
+            </tr>
+            <?php $totalprice=$totalprice + $cart->price ?>
+            @endforeach
+        </table>
 
-              @if ($product->discount_price!=null)
-
-              <h6 style="color: red;">
-               Discount Price
-               <br>
-               {{$product->discount_price}}&#2547;
-              </h6>
-
-              <h6 style="text-decoration: line-through; color:blue;">
-               Price
-               <br>
-               {{$product->price}}&#2547;
-            </h6>
-
-            @else
-            <h6 style="color:blue:">
-               Price
-               <br>
-               {{$product->price}}&#2547;
-            </h6>
-              @endif
-
-              <h6>Product Catagory : {{$product->catagory}}</h6>
-              <h6>Product Description : {{$product->description}}</h6>
-              <h6>Avilable Product : {{$product->quantity}}</h6>
-
-              <form action="{{url('add_cart',$product->id)}}" method="POST">
-                @csrf
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <input type="number" name="quantity" value="1" min="1" style="width: 100px;">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="submit" value="Add To Cart">
-                    </div>
-
-                </div>
-              </form>
-
-           </div>
+        <div style="margin: auto; width:50%; text-align:center;">
+            <h1 style="font-size: 25px">Total Price :  {{$totalprice}}&#2547;</h1>
         </div>
-     </div>
+
+      </div>
 
 
-      @include('home.footer')
       <!-- footer end -->
       <div class="cpy_">
          <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
