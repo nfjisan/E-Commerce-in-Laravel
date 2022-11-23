@@ -27,6 +27,14 @@
         @include('home.header')
 
 
+        @if(session()->has('message'))
+        <div class="alert alert-success">
+
+            {{session()->get('message')}}
+
+        </div>
+        @endif
+
 
       <div style="margin: auto; width:50%;">
         <table class="table table-bordered">
@@ -56,6 +64,13 @@
 
         <div style="margin: auto; width:50%; text-align:center;">
             <h1 style="font-size: 25px">Total Price :  {{$totalprice}}&#2547;</h1>
+        </div>
+
+        <div style="margin: auto; width:50%; text-align:center; padding-top:20px;">
+            <h1 style="font-size: 25px; padding-bottom:14px;">Procced To Order</h1>
+
+            <a href="{{url('cash_order')}}" class="btn btn-danger">Cash On Delivery</a>
+            <a href="" class="btn btn-danger">Pay Using Cards</a>
         </div>
 
       </div>
