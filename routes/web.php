@@ -33,6 +33,7 @@ route::get('/update_product/{id}',[AdminController::class, 'update_product']);
 route::post('/confirm_update_product/{id}',[AdminController::class, 'CnfmUpdateProduct']);
 route::get('/order',[AdminController::class, 'order']);
 route::get('/delivered/{id}',[AdminController::class, 'delevered']);
+route::get('/print_pdf/{id}',[AdminController::class, 'print_pdf']);
 
 
 

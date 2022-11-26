@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Catagory;
 use App\Models\Product;
 use App\Models\Order;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -115,5 +116,12 @@ class AdminController extends Controller
         $order->save();
 
         return redirect()->back();
+    }
+
+    public function print_pdf($id){
+        $order=order::find($id);
+        $pdf=PDF::loadView('admin.pdf',compact('order'));
+        return $pdf->download('order_details.pdf');
+
     }
 }
