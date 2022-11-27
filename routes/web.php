@@ -9,9 +9,9 @@ use App\Http\Controllers\AdminController;
 
 route::get('/',[HomeController::class, 'index']);
 
-Route::get('/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-route::get('/redirect',[HomeController::class, 'redirect']);
+route::get('/redirect',[HomeController::class, 'redirect'])->middleware('auth','verified');
 route::get('/view_catagory',[AdminController::class, 'view_catagory']);
 route::post('/add_catagory',[AdminController::class, 'add_catagory']);
 route::get('/delete_catagory/{id}',[AdminController::class, 'delete_catagory']);
@@ -34,6 +34,8 @@ route::post('/confirm_update_product/{id}',[AdminController::class, 'CnfmUpdateP
 route::get('/order',[AdminController::class, 'order']);
 route::get('/delivered/{id}',[AdminController::class, 'delevered']);
 route::get('/print_pdf/{id}',[AdminController::class, 'print_pdf']);
+route::get('/send_email/{id}',[AdminController::class, 'send_email']);
+route::post('/send_user_email/{id}',[AdminController::class, 'send_user_email']);
 
 
 
