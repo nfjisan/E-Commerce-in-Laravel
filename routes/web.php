@@ -36,6 +36,7 @@ route::get('/delivered/{id}',[AdminController::class, 'delevered']);
 route::get('/print_pdf/{id}',[AdminController::class, 'print_pdf']);
 route::get('/send_email/{id}',[AdminController::class, 'send_email']);
 route::post('/send_user_email/{id}',[AdminController::class, 'send_user_email']);
+route::get('/search',[AdminController::class, 'searchData']);
 
 
 
@@ -44,6 +45,8 @@ route::post('/add_cart/{id}',[HomeController::class, 'add_cart']);
 route::get('/show_cart',[HomeController::class, 'show_cart']);
 route::get('/remove_cart/{id}',[HomeController::class, 'remove_cart']);
 route::get('/cash_order',[HomeController::class, 'cash_order']);
+route::get('/show_order',[HomeController::class, 'show_order']);
+route::get('/cancel_order/{id}',[HomeController::class, 'cancel_order']);
 
 
 route::get('/stripe/{totalprice}',[HomeController::class, 'stripe']);

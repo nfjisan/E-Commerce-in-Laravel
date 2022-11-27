@@ -37,6 +37,13 @@
 
                     <div class="product" style="text-align:center; padding-top:40px;">
                         <h2 style="font-size: 40px;">All Order</h2>
+
+                        <div>
+                            <form action="{{ url('search') }}" method="get">
+                                <input type="text" style="color: black;" name="search" placeholder="search here..">
+                                <input type="submit" value="Search" class="btn btn-outline-primary">
+                            </form>
+                        </div>
                     </div>
 
                     <table class="table table-bordered"
@@ -57,7 +64,7 @@
                             <th>Send Email</th>
                         </tr>
 
-                        @foreach ($order as $order)
+                        @forelse ($order as $order)
                             <tr>
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->email }}</td>
@@ -89,7 +96,11 @@
                                     <a href="{{ url('send_email', $order->id) }}" class="btn btn-info">Send Email</a>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="16">No Data Found</td>
+                            </tr>
+                        @endforelse
                     </table>
                 </div>
             </div>
