@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<base href="/public">
+
 @include('admin.head')
 
 <body>

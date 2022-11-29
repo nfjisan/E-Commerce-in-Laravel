@@ -2,66 +2,105 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Catagory;
-use App\Models\Product;
-use App\Models\Order;
 use PDF;
 use Notification;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Catagory;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Notification\SendEmailNotification;
 
 class AdminController extends Controller
 {
     public function view_catagory(){
+        if(Auth::id())
+        {
         $data=catagory::all();
         return view('admin.catagory',compact('data'));
+        }else
+        {
+            return redirect('login');
+        }
+
     }
 
     public function add_catagory(Request $request){
-        $data= new Catagory;
-        $data->catagory_name=$request->catagory;
-        $data->save();
+        if(Auth::id())
+        {
+            $data= new Catagory;
+            $data->catagory_name=$request->catagory;
+            $data->save();
 
-        return redirect()->back()->with('message','catagory added successfully');
+            return redirect()->back()->with('message','catagory added successfully');
+        }else
+        {
+            return redirect('login');
+        }
+
     }
 
     public function delete_catagory($id){
+
         $data=catagory::find($id);
         $data->delete();
         return redirect()->back()->with('message','catagory Deleted successfully');
+
+
     }
 
     public function view_product(){
 
+        if(Auth::id())
+        {
         $catagory = Catagory::all();
         return view('admin.product',compact('catagory'));
+        }else
+        {
+            return redirect('login');
+        }
+
     }
 
     public function add_product(Request $request){
 
-        $product=new product;
+        if(Auth::id())
+        {
+            $product=new product;
 
-        $product->title=$request->title;
-        $product->description=$request->description;
-        $product->price=$request->price;
-        $product->quantity=$request->quantity;
-        $product->discount_price=$request->discount_price;
-        $product->catagory=$request->catagory;
+            $product->title=$request->title;
+            $product->description=$request->description;
+            $product->price=$request->price;
+            $product->quantity=$request->quantity;
+            $product->discount_price=$request->discount_price;
+            $product->catagory=$request->catagory;
 
-        $image=$request->image;
-        $filename  = time() . '.' . $image->getClientOriginalExtension();
-        // $imagename=time().'.'.$image->getClintOriginalExtension();
-        $request->image->move('product',$filename);
-        $product->image=$filename;
+            $image=$request->image;
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            // $imagename=time().'.'.$image->getClintOriginalExtension();
+            $request->image->move('product',$filename);
+            $product->image=$filename;
 
-        $product->save();
+            $product->save();
 
-        return redirect()->back()->with('message','product Added successfully');
+            return redirect()->back()->with('message','product Added successfully');
+        }else
+        {
+
+        }
+
     }
 
     public function show_product(){
+        if(Auth::id())
+        {
         $product=product::all();
         return view('admin.showProduct',compact('product'));
+        }else
+        {
+            return redirect('login');
+        }
+
     }
 
     public function delete_product($id){
@@ -77,28 +116,36 @@ class AdminController extends Controller
     }
 
     public function CnfmUpdateProduct(Request $request, $id){
-        $product=product::find($id);
 
-        $product->title=$request->title;
-        $product->description=$request->description;
-        $product->price=$request->price;
-        $product->quantity=$request->quantity;
-        $product->discount_price=$request->discount_price;
-        $product->catagory=$request->catagory;
+        if(Auth::id())
+        {
+            $product=product::find($id);
 
-        $image=$request->image;
+            $product->title=$request->title;
+            $product->description=$request->description;
+            $product->price=$request->price;
+            $product->quantity=$request->quantity;
+            $product->discount_price=$request->discount_price;
+            $product->catagory=$request->catagory;
 
-        if($image){
+            $image=$request->image;
 
-        $filename  = time() . '.' . $image->getClientOriginalExtension();
-        $request->image->move('product',$filename);
-        $product->image=$filename;
+            if($image){
 
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            $request->image->move('product',$filename);
+            $product->image=$filename;
+
+            }
+
+            $product->save();
+
+            return redirect()->back()->with('message','product Updated successfully');
+
+        }else
+        {
+            return redirect('login');
         }
-
-        $product->save();
-
-        return redirect()->back()->with('message','product Updated successfully');
 
 
     }
